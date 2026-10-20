@@ -1,0 +1,98 @@
+.el-tooltip__trigger:focus-visible {
+  outline: none !important;
+}
+
+.el-tooltip__trigger {
+  outline: none !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 6px;
+}
+::-webkit-scrollbar-corner {
+  display: block;
+}
+/* Scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+/* Scrollbar track */
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-track {
+  border-right-color: transparent;
+  border-left-color: transparent;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'PingFang SC',
+    'Hiragino Sans GB',
+    'Microsoft YaHei',
+    sans-serif !important;
+  font-size: 14px !important;
+  color: var(--text-1, #1d2129);
+  -webkit-font-smoothing: antialiased;
+}
+
+.el-input--large {
+  font-size: 1.2rem !important;
+}
+
+.el-select__selected-item {
+  font-size: 1.2rem !important;
+}
+
+/* 下拉框 placeholder 字体大小，与筛选项标签/输入框保持一致 */
+.el-select__placeholder,
+.el-select__placeholder span,
+.el-select .el-select__selected-item.el-select__placeholder {
+  font-size: 14px !important;
+}
+
+.el-select__tags-text {
+  font-size: 1.2rem !important;
+}
+
+.el-radio__label {
+  font-size: 1.2rem !important;
+}
+
+.el-checkbox__label {
+  font-size: 1.2rem !important;
+}
+
+.el-checkbox-button__inner {
+  font-size: 1.2rem !important;
+}
+
+/* ElMessage font size */
+.el-message {
+  font-size: 1.2rem !important;
+}
+
+.el-message__content {
+  font-size: 1.2rem !important;
+}
+
+/* Warning message font size */
+.el-message--warning {
+  font-size: 1.2rem !important;
+}
+
+.el-message--warning .el-message__content {
+  font-size: 1.2rem !important;
+}

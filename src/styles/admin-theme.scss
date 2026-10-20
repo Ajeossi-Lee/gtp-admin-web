@@ -1,0 +1,245 @@
+:root {
+  --primary: #165dff;
+  --primary-hover: #4080ff;
+  --primary-light: #e8f3ff;
+  --text-1: #1d2129;
+  --text-2: #4e5969;
+  --text-3: #86909c;
+  --text-4: #c9cdd4;
+  --border: #e5e6eb;
+  --border-2: #f2f3f5;
+  --fill: #f2f3f5;
+  --fill-2: #f7f8fa;
+  --success: #00b42a;
+  --danger: #f53f3f;
+  --radius: 4px;
+}
+
+/* Element Plus injected styles override :root; pin the primary color */
+:root {
+  --el-color-primary: #165dff !important;
+  --el-color-primary-light-3: #4080ff !important;
+  --el-color-primary-light-5: #6aa1ff !important;
+  --el-color-primary-light-7: #94bfff !important;
+  --el-color-primary-light-8: #bedaff !important;
+  --el-color-primary-light-9: #e8f3ff !important;
+  --el-color-primary-dark-2: #0e42d2 !important;
+  --el-color-success: #00b42a !important;
+  --el-color-danger: #f53f3f !important;
+}
+
+.el-button--primary {
+  --el-button-bg-color: #165dff;
+  --el-button-border-color: #165dff;
+  --el-button-hover-bg-color: #4080ff;
+  --el-button-hover-border-color: #4080ff;
+  --el-button-hover-link-text-color: #4080ff;
+  --el-button-active-bg-color: #0e42d2;
+  --el-button-active-border-color: #0e42d2;
+  --el-button-outline-color: #e8f3ff;
+  background-color: #165dff !important;
+  border-color: #165dff !important;
+}
+
+.el-button--primary:hover,
+.el-button--primary:focus {
+  background-color: #4080ff !important;
+  border-color: #4080ff !important;
+}
+
+.el-button--primary.is-link,
+.el-button--primary.is-text {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  color: #165dff !important;
+}
+
+.el-button--primary.is-link:hover,
+.el-button--primary.is-text:hover {
+  color: #4080ff !important;
+}
+
+.el-link.el-link--primary {
+  --el-link-text-color: #165dff;
+  --el-link-hover-text-color: #4080ff;
+  color: #165dff !important;
+}
+
+.el-pagination .el-pager li.is-active {
+  background-color: #165dff !important;
+  color: #fff !important;
+}
+
+#nprogress .bar {
+  background: #165dff !important;
+}
+
+#nprogress .peg {
+  box-shadow:
+    0 0 10px #165dff,
+    0 0 5px #165dff !important;
+}
+
+/* Shared list page layout */
+.admin-page {
+  padding: 4px 24px 0;
+}
+
+.admin-page-title {
+  margin: 0 0 16px;
+  color: var(--text-1);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.admin-filter-card {
+  margin-bottom: 16px;
+  padding: 20px 12px 4px;
+  background: #fff;
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(29, 52, 110, 0.08);
+}
+
+.admin-filter {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.admin-filter .fi {
+  width: 25%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  padding-right: 20px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.admin-filter .fi > label {
+  width: 102px;
+  flex: none;
+  color: var(--text-1);
+  font-size: 14px;
+  text-align: right;
+}
+
+.admin-filter .fi .el-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-filter .fi .el-input__wrapper {
+  height: 32px;
+  padding: 0 10px;
+  border-radius: var(--radius);
+  box-shadow: 0 0 0 1px var(--border) inset;
+}
+
+.admin-filter .fi .el-input__wrapper:hover,
+.admin-filter .fi .el-input__wrapper.is-focus {
+  box-shadow: 0 0 0 1px var(--primary) inset;
+}
+
+.admin-filter .el-button {
+  height: 32px;
+  margin: 0;
+  padding: 0 15px;
+}
+
+.admin-filter .fi > .el-form-item {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.admin-filter .fi.btns {
+  gap: 8px;
+  justify-content: flex-end;
+  padding-right: 0;
+}
+
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+  padding-bottom: 12px;
+}
+
+.admin-toolbar .spacer {
+  flex: 1;
+}
+
+.admin-tablewrap {
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.admin-tablewrap .el-table {
+  --el-table-header-bg-color: var(--fill-2);
+  --el-table-header-text-color: var(--text-1);
+  --el-table-text-color: var(--text-1);
+  --el-table-border-color: var(--border-2);
+  --el-table-row-hover-bg-color: var(--fill-2);
+  --el-table-header-font-weight: 500;
+}
+
+.admin-tablewrap .el-table th.el-table__cell {
+  height: 44px;
+  background: var(--fill-2);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.admin-tablewrap .el-table td.el-table__cell {
+  height: 54px;
+  font-size: 14px;
+}
+
+.admin-pager {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 18px 4px 22px;
+}
+
+.admin-pager .el-pagination {
+  --el-pagination-button-width: 32px;
+  --el-pagination-button-height: 32px;
+  --el-pagination-font-size: 14px;
+  --el-pagination-button-bg-color: transparent;
+  --el-pagination-hover-color: var(--primary);
+}
+
+.admin-pager .el-pager li.is-active {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 500;
+  border-radius: var(--radius);
+}
+
+.table-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.table-actions .el-button + .el-button {
+  margin-left: 0;
+}
+
+@media (max-width: 1200px) {
+  .admin-filter .fi {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-filter .fi {
+    width: 100%;
+    padding-right: 0;
+  }
+}

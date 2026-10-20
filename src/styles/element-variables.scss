@@ -1,0 +1,12 @@
+// Override Element Plus theme variables
+// Injected into each on-demand component style
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'primary': (
+      'base': #165dff
+    )
+  ),
+  $font-size: (
+    'base': 14px
+  )
+);

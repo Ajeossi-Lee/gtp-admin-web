@@ -1,0 +1,15 @@
+# http://editorconfig.org
+
+root = true
+
+[*] # Applies to all files
+charset = utf-8 # File encoding
+indent_style = space # Indent style (tab | space)
+indent_size = 2 # Indent size
+end_of_line = lf # Line ending (lf | cr | crlf)
+trim_trailing_whitespace = true # Trim trailing whitespace
+insert_final_newline = true # Insert a newline at end of file
+
+[*.md] # Markdown-only rules
+max_line_length = off
+trim_trailing_whitespace = false
