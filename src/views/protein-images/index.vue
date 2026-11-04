@@ -1,9 +1,5 @@
 <template>
   <div class="protein-images-page">
-    <header class="page-head">
-      <h2>Protein Images</h2>
-    </header>
-
     <section class="panel filter-panel">
       <div class="admin-filter">
         <div class="fi">
@@ -18,39 +14,29 @@
           <label>Ensemble ID</label>
           <el-input v-model="query.ensembleId" placeholder="Enter Ensemble ID" clearable @keyup.enter="handleSearch" />
         </div>
-        <div class="fi btns">
-          <el-button type="primary" @click="handleSearch">
-            <IconSearch theme="outline" size="14" fill="currentColor" />
-            Search
-          </el-button>
-        </div>
         <div class="fi">
           <label>Method</label>
           <el-select v-model="query.method" placeholder="Select method" clearable>
-            <el-option
-              v-for="item in methodOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
+            <el-option v-for="item in methodOptions" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </div>
         <div class="fi">
           <label>Stage</label>
           <el-select v-model="query.stage" placeholder="Select stage" clearable>
-            <el-option
-              v-for="item in stageOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
+            <el-option v-for="item in stageOptions" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </div>
         <div class="fi">
           <label>Location</label>
-          <el-input v-model="query.location" placeholder="Enter location" clearable @keyup.enter="handleSearch" />
+          <el-select v-model="query.location" placeholder="Select location" clearable>
+            <el-option v-for="item in locationOptions" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
         </div>
         <div class="fi btns">
+          <el-button type="primary" @click="handleSearch">
+            <IconSearch theme="outline" size="14" fill="currentColor" />
+            Search
+          </el-button>
           <el-button @click="handleReset">
             <IconRedo theme="outline" size="14" fill="currentColor" />
             Reset
@@ -60,31 +46,34 @@
     </section>
 
     <section class="panel table-panel">
-      <el-table v-loading="loading" :data="tableData" class="data-table">
-        <el-table-column prop="id" label="ID" width="80" />
-        <el-table-column prop="gene" label="Gene" min-width="120" show-overflow-tooltip />
-        <el-table-column prop="protein" label="Protein" min-width="120" show-overflow-tooltip />
-        <el-table-column prop="ensembleId" label="Ensemble ID" min-width="150" show-overflow-tooltip />
-        <el-table-column prop="method" label="Method" width="120">
+      <div class="table-toolbar">
+        <h2 class="table-title">Protein Images</h2>
+      </div>
+      <el-table v-loading="loading" :data="tableData" border class="data-table">
+        <el-table-column prop="id" label="ID" width="80" align="center" />
+        <el-table-column prop="gene" label="Gene" min-width="120" align="center" show-overflow-tooltip />
+        <el-table-column prop="protein" label="Protein" min-width="120" align="center" show-overflow-tooltip />
+        <el-table-column prop="ensembleId" label="Ensemble ID" min-width="150" align="center" show-overflow-tooltip />
+        <el-table-column prop="method" label="Method" width="120" align="center">
           <template #default="{ row }">
             {{ methodLabel(row.method) }}
           </template>
         </el-table-column>
-        <el-table-column prop="stage" label="Stage" width="130">
+        <el-table-column prop="stage" label="Stage" width="130" align="center">
           <template #default="{ row }">
             {{ stageLabel(row.stage) }}
           </template>
         </el-table-column>
-        <el-table-column prop="location" label="Location" min-width="120" show-overflow-tooltip />
-        <el-table-column prop="detection" label="Detected" width="100">
+        <el-table-column prop="location" label="Location" min-width="120" align="center" show-overflow-tooltip />
+        <el-table-column prop="detection" label="Detected" width="100" align="center">
           <template #default="{ row }">
             <el-tag :type="row.detection ? 'success' : 'info'" size="small">
               {{ row.detection ? 'Yes' : 'No' }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="imageDir" label="Image directory" min-width="180" show-overflow-tooltip />
-        <el-table-column label="Actions" width="100" fixed="right" align="center">
+        <el-table-column prop="imageDir" label="Image directory" min-width="180" align="center" show-overflow-tooltip />
+        <el-table-column label="Actions" width="90" fixed="right" align="center">
           <template #default="{ row }">
             <div class="table-actions">
               <el-tooltip content="Edit" placement="top">
@@ -104,25 +93,15 @@
 
       <div class="table-pager">
         <el-config-provider :locale="en">
-          <el-pagination
-            v-model:current-page="query.page"
-            v-model:page-size="query.pageSize"
-            :total="total"
-            :page-sizes="[10, 20, 50, 100]"
-            layout="total, prev, pager, next, sizes"
-            @current-change="loadData"
-            @size-change="handleSizeChange"
-          />
+          <el-pagination v-model:current-page="query.page" v-model:page-size="query.pageSize" :total="total"
+            :page-sizes="[10, 20, 50, 100]" layout="total, prev, pager, next, sizes" @current-change="loadData"
+            @size-change="handleSizeChange" />
         </el-config-provider>
       </div>
     </section>
 
-    <el-dialog
-      v-model="dialogVisible"
-      title="Edit Protein Image"
-      width="720px"
-      destroy-on-close
-    >
+    <el-dialog v-model="dialogVisible" title="Edit Protein Image" width="720px" destroy-on-close
+      class="protein-images-dialog">
       <el-form ref="formRef" :model="form" :rules="rules" label-width="150px">
         <el-form-item label="Gene" prop="gene">
           <el-input v-model="form.gene" maxlength="100" />
@@ -135,22 +114,12 @@
         </el-form-item>
         <el-form-item label="Method" prop="method">
           <el-select v-model="form.method" placeholder="Select method">
-            <el-option
-              v-for="item in methodOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
+            <el-option v-for="item in methodOptions" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item label="Stage" prop="stage">
           <el-select v-model="form.stage" placeholder="Select stage">
-            <el-option
-              v-for="item in stageOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
+            <el-option v-for="item in stageOptions" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item label="Location" prop="location">
@@ -225,6 +194,18 @@ const stageOptions = [
   { label: '8-cell', value: '8-cell' },
   { label: 'Morula', value: 'morula' },
   { label: 'Blastocyst', value: 'blastocyst' }
+]
+
+/** 下拉中的 Null 表示空值，不写入这个字面量 */
+const LOCATION_NULL = '__NULL__'
+
+const locationOptions = [
+  { label: 'Null', value: LOCATION_NULL },
+  { label: 'Cytoplasm', value: 'Cytoplasm' },
+  { label: 'Cytoplasm & Nucleus', value: 'Cytoplasm & Nucleus' },
+  { label: 'Membrane', value: 'Membrane' },
+  { label: 'Nucleus', value: 'Nucleus' },
+  { label: 'Nucleus_Foci', value: 'Nucleus_Foci' }
 ]
 
 const methodLabel = (value?: string) =>
@@ -387,18 +368,6 @@ onMounted(() => {
   background: linear-gradient(180deg, #f6f7fb 0%, #f3f4f8 100%);
 }
 
-.page-head {
-  margin-bottom: 18px;
-}
-
-.page-head h2 {
-  margin: 0;
-  color: #1d2129;
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: 0.2px;
-}
-
 .panel {
   background: #fff;
   border: 1px solid rgba(29, 33, 41, 0.06);
@@ -407,13 +376,40 @@ onMounted(() => {
 }
 
 .filter-panel {
-  padding: 20px 20px 4px;
+  padding: 20px 20px 8px;
   margin-bottom: 16px;
 }
 
+.filter-panel :deep(.admin-filter) {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 16px;
+  row-gap: 12px;
+  align-items: center;
+}
+
+.filter-panel :deep(.admin-filter .fi) {
+  width: auto;
+  min-width: 0;
+  margin-bottom: 0;
+  padding-right: 0;
+}
+
+.filter-panel :deep(.admin-filter .fi.btns) {
+  grid-column: 3 / 5;
+  width: auto;
+  min-width: 0;
+  margin-bottom: 0;
+  padding-right: 0;
+  justify-content: flex-end;
+}
+
 .filter-panel :deep(.fi > label) {
+  width: auto;
   color: #4e5969;
   font-size: 14px;
+  font-weight: 400;
+  white-space: nowrap;
 }
 
 .filter-panel :deep(.admin-filter .fi .el-input__wrapper),
@@ -453,6 +449,7 @@ onMounted(() => {
 
 .filter-panel :deep(.el-select) {
   flex: 1;
+  width: 100%;
   min-width: 0;
 }
 
@@ -471,6 +468,53 @@ onMounted(() => {
   border-color: #e5e6eb;
 }
 
+.filter-panel :deep(.fi.btns .el-button > span) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-panel :deep(.fi.btns .el-button .i-icon) {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.filter-panel :deep(.fi.btns .el-button .i-icon svg) {
+  display: block;
+}
+
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 56px;
+  padding: 12px 20px;
+  border-bottom: 1px solid #f2f3f5;
+}
+
+.table-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: #1d2129;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+}
+
+.table-title::before {
+  content: '';
+  width: 3px;
+  height: 16px;
+  border-radius: 2px;
+  background: #165dff;
+  flex: none;
+}
+
 .table-panel {
   overflow: hidden;
 }
@@ -478,22 +522,35 @@ onMounted(() => {
 .data-table {
   width: 100%;
   --el-table-header-bg-color: #fafbfc;
-  --el-table-header-text-color: #86909c;
-  --el-table-text-color: #1d2129;
-  --el-table-border-color: #f2f3f5;
+  --el-table-header-text-color: #2e3238;
+  --el-table-text-color: #4e5969;
+  --el-table-border-color: #e5e6eb;
   --el-table-row-hover-bg-color: #f7f8fa;
 }
 
 .data-table :deep(th.el-table__cell) {
   height: 48px;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.2px;
+  text-align: center;
 }
 
 .data-table :deep(td.el-table__cell) {
   height: 56px;
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #4e5969;
+  text-align: center;
+}
+
+.data-table :deep(td.el-table__cell .cell) {
+  font-weight: 400;
+  color: #4e5969;
+}
+
+.data-table :deep(td.el-table__cell .el-link) {
+  font-weight: 400;
 }
 
 .data-table :deep(.el-table__inner-wrapper::before) {
@@ -540,5 +597,79 @@ onMounted(() => {
 .table-pager :deep(.el-pager li.is-active) {
   border-radius: 6px;
   color: #fff !important;
+}
+
+/* 平板：筛选条件两列，按钮单独一行靠右 */
+@media (max-width: 1200px) {
+  .filter-panel :deep(.admin-filter) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filter-panel :deep(.admin-filter .fi.btns) {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+  }
+}
+
+/* 手机：筛选条件纵向排列，按钮仍靠右 */
+@media (max-width: 768px) {
+  .protein-images-page {
+    padding: 4px 12px 16px;
+  }
+
+  .filter-panel {
+    padding: 14px 12px 12px;
+  }
+
+  .filter-panel :deep(.admin-filter) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .filter-panel :deep(.admin-filter .fi.btns) {
+    grid-column: auto;
+    justify-content: flex-end;
+  }
+
+  .table-toolbar {
+    padding: 12px;
+  }
+
+  .table-pager {
+    justify-content: center;
+    padding: 12px;
+    overflow-x: auto;
+  }
+
+  .table-pager :deep(.el-pagination) {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 8px;
+  }
+}
+</style>
+
+<style>
+/* 弹窗挂到 body，需用非 scoped 样式覆盖宽度 */
+@media (max-width: 768px) {
+  .protein-images-dialog.el-dialog {
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px);
+  }
+
+  .protein-images-dialog .el-dialog__body {
+    max-height: 70vh;
+    overflow: auto;
+  }
+
+  .protein-images-dialog .el-form-item__label {
+    width: auto !important;
+    height: auto;
+    justify-content: flex-start;
+    line-height: 22px;
+  }
+
+  .protein-images-dialog .el-form-item__content {
+    margin-left: 0 !important;
+  }
 }
 </style>

@@ -9,7 +9,9 @@ import path from 'path'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  // 生产环境挂在 /gtp/admin-system/ 下；本地 npm run dev 仍从根路径访问
+  base: command === 'build' ? '/gtp/admin-system/' : '/',
   plugins: [
     vue(),
     AutoImport({
@@ -49,7 +51,7 @@ export default defineConfig({
     }
   },
   server: {
-    port: 3111,
+    port: 3901,
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:8091',
@@ -58,4 +60,4 @@ export default defineConfig({
       }
     }
   }
-})
+}))

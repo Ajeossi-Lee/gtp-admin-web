@@ -6,9 +6,15 @@ export interface ProteinImageConfQuery {
   pageSize?: number
   gene?: string
   protein?: string
+  ensembleId?: string
+  location?: string
   method?: string
   stage?: string
   status?: string
+  /** 创建时间起，yyyy-MM-dd，含当天 */
+  createdAtStart?: string
+  /** 创建时间止，yyyy-MM-dd，含当天 */
+  createdAtEnd?: string
 }
 
 export type ProteinImageConfPayload = {
@@ -41,6 +47,18 @@ export function getProteinImageConf(id: number) {
   })
 }
 
+export interface ProteinImageConfImportError {
+  row: number
+  field: string
+  message: string
+}
+
+export interface ProteinImageConfImportResult {
+  success: boolean
+  inserted: number
+  errors: ProteinImageConfImportError[]
+}
+
 /**
  * Generate a conf.csv-style record
  */
@@ -48,6 +66,19 @@ export function createProteinImageConf(data: ProteinImageConfPayload) {
   return leeRequest.post<CommonResult<number>>({
     url: '/protein-image-conf',
     data
+  })
+}
+
+/**
+ * 按 conf.csv 批量导入，校验失败时不写入
+ */
+export function importProteinImageConfCsv(file: File) {
+  const formData = new FormData()
+  formData.append('file', file)
+  return leeRequest.post<CommonResult<ProteinImageConfImportResult>>({
+    url: '/protein-image-conf/import',
+    data: formData,
+    timeout: 5 * 60 * 1000
   })
 }
 

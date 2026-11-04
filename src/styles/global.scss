@@ -6,6 +6,15 @@
   outline: none !important;
 }
 
+/* 悬浮提示限制最大宽度，长文本自动换行，短提示保持原宽度 */
+.el-popper.is-dark {
+  max-width: 400px;
+  box-sizing: border-box;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.5;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -27,22 +36,20 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
+:root {
+  --el-font-family: '微软雅黑', Arial;
+}
+
 html,
 body,
 #app {
   height: 100%;
   overflow: hidden;
+  font-family: '微软雅黑', Arial;
 }
 
 body {
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    'PingFang SC',
-    'Hiragino Sans GB',
-    'Microsoft YaHei',
-    sans-serif !important;
+  font-family: '微软雅黑', Arial !important;
   font-size: 14px !important;
   color: var(--text-1, #1d2129);
   -webkit-font-smoothing: antialiased;

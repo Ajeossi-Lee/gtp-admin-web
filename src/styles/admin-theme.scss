@@ -181,22 +181,41 @@
 .admin-tablewrap .el-table {
   --el-table-header-bg-color: var(--fill-2);
   --el-table-header-text-color: var(--text-1);
-  --el-table-text-color: var(--text-1);
+  --el-table-text-color: #4e5969;
   --el-table-border-color: var(--border-2);
   --el-table-row-hover-bg-color: var(--fill-2);
-  --el-table-header-font-weight: 500;
+  --el-table-header-font-weight: 700;
+}
+
+/* 表头加粗，表身保持正常字重 */
+.el-table th.el-table__cell,
+.el-table th.el-table__cell .cell {
+  font-weight: 700;
+}
+
+.el-table td.el-table__cell,
+.el-table td.el-table__cell .cell {
+  color: #4e5969;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.el-table td.el-table__cell .el-link {
+  font-weight: 400;
 }
 
 .admin-tablewrap .el-table th.el-table__cell {
   height: 44px;
   background: var(--fill-2);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .admin-tablewrap .el-table td.el-table__cell {
   height: 54px;
   font-size: 14px;
+  font-weight: 400;
+  color: #4e5969;
 }
 
 .admin-pager {

@@ -90,7 +90,7 @@ const crumbParent = computed(() => {
 .admin-header {
   height: 60px;
   flex: none;
-  border-bottom: 1px solid var(--border-2);
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .admin-body {
@@ -103,7 +103,7 @@ const crumbParent = computed(() => {
   flex: none;
   overflow: hidden;
   background: #fff;
-  border-right: 1px solid var(--border-2);
+  border-right: 1px solid #e5e7eb;
   transition: width 0.2s;
 }
 

@@ -5,6 +5,24 @@ import { localCache } from '@/utils/cache'
 
 let refreshing = false
 
+/** 续期结果可能在 data 中；旧接口曾把 Token 放在 message 里 */
+function pickRenewedToken(result: unknown): string {
+  if (typeof result === 'string') {
+    return result
+  }
+  if (!result || typeof result !== 'object') {
+    return ''
+  }
+  const body = result as { data?: unknown; message?: unknown }
+  if (typeof body.data === 'string' && body.data) {
+    return body.data
+  }
+  if (typeof body.message === 'string' && body.message.split('.').length === 3) {
+    return body.message
+  }
+  return ''
+}
+
 const interceptors = {
   requestSuccessFn: (config: any) => {
     const token = localCache.getCache('token')
@@ -25,8 +43,9 @@ const interceptors = {
       import('./api/user')
         .then(({ updateTokenRequest }) => updateTokenRequest())
         .then((result) => {
-          if (result?.data) {
-            localCache.setCache('token', result.data)
+          const renewed = pickRenewedToken(result)
+          if (renewed) {
+            localCache.setCache('token', renewed)
           }
         })
         .catch(() => {
@@ -42,11 +61,14 @@ const interceptors = {
       const msg = data.message || 'Request failed'
       toast(msg, 'error')
       const isAuthError = /未登录|Token|其他地方登录|not logged in|expired/i.test(msg)
-      const isLoginPage = window.location.hash.includes('/login')
+      // history 模式下登录页是 /login，生产环境还要带上 /gtp/admin-system 前缀
+      const loginPath = `${import.meta.env.BASE_URL}login`
+      const isLoginPage =
+        window.location.pathname === loginPath || window.location.pathname.startsWith(`${loginPath}/`)
       if (isAuthError && !isLoginPage) {
         localCache.removeCache('token')
         localCache.removeCache('userInfo')
-        window.location.hash = '#/login'
+        window.location.assign(loginPath)
       }
       return Promise.reject(data)
     }

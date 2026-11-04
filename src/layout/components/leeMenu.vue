@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { Connection, FirstAidKit, HomeFilled, Picture, Upload } from '@element-plus/icons-vue'
+import { Connection, HomeFilled, Notebook, Picture, Upload } from '@element-plus/icons-vue'
 
 defineOptions({
   name: 'LeeMenu'
@@ -28,10 +28,10 @@ const route = useRoute()
 
 const menus = [
   { path: '/home', title: 'Home', icon: HomeFilled },
-  { path: '/protein-info', title: 'Protein Info', icon: FirstAidKit },
+  { path: '/protein-info', title: 'Protein Info', icon: Notebook },
   { path: '/protein-images', title: 'Protein Images', icon: Picture },
-  { path: '/protein-image-submit', title: 'Submit Images', icon: Upload },
-  { path: '/gene-gtp', title: 'GTP Mouse Strain', icon: Connection }
+  { path: '/gene-gtp', title: 'GTP Mouse Strain', icon: Connection },
+  { path: '/protein-image-submit', title: 'Submit Images', icon: Upload }
 ]
 
 const activePath = computed(() => {
@@ -68,11 +68,11 @@ const activePath = computed(() => {
   --el-menu-bg-color: #fff;
   --el-menu-hover-bg-color: var(--fill-2);
   --el-menu-active-color: var(--primary);
-  --el-menu-item-height: 44px;
+  --el-menu-item-height: 48px;
 }
 
 .side-menu :deep(.el-menu-item) {
-  margin: 0;
+  margin: 0 0 8px;
   color: var(--text-2);
 }
 

@@ -63,8 +63,9 @@ const useUserStore = defineStore('user', () => {
    */
   const refreshToken = async () => {
     const res = await updateTokenRequest()
-    if (res?.data) {
-      setToken(res.data)
+    const renewed = res?.data
+    if (renewed) {
+      setToken(renewed)
     }
   }
 

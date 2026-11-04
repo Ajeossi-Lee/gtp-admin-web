@@ -7,12 +7,8 @@
       </svg>
       <span v-show="!collapsed" class="brand-name">GTP Admin</span>
     </div>
-    <button
-      type="button"
-      class="collapse-btn"
-      :title="collapsed ? 'Expand menu' : 'Collapse menu'"
-      @click="$emit('toggle-collapse')"
-    >
+    <button type="button" class="collapse-btn" :title="collapsed ? 'Expand menu' : 'Collapse menu'"
+      @click="$emit('toggle-collapse')">
       <MenuUnfoldOne v-if="collapsed" theme="outline" size="18" fill="#4E5969" />
       <MenuFoldOne v-else theme="outline" size="18" fill="#4E5969" />
     </button>
@@ -25,12 +21,8 @@
         </svg>
       </div>
       <div class="hdr-icons">
-        <button
-          type="button"
-          class="hdr-icon"
-          :title="isFullscreen ? 'Exit fullscreen' : 'Fullscreen'"
-          @click="toggleFullscreen"
-        >
+        <button type="button" class="hdr-icon" :title="isFullscreen ? 'Exit fullscreen' : 'Fullscreen'"
+          @click="toggleFullscreen">
           <OffScreen v-if="isFullscreen" theme="outline" size="18" fill="#4E5969" />
           <FullScreen v-else theme="outline" size="18" fill="#4E5969" />
         </button>
@@ -131,6 +123,7 @@ const handleCommand = async (command: string) => {
   gap: 10px;
   padding-left: 22px;
   overflow: hidden;
+  border-right: 1px solid #e5e7eb;
   cursor: pointer;
   transition: width 0.2s;
 }
