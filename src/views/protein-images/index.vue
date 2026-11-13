@@ -73,6 +73,16 @@
           </template>
         </el-table-column>
         <el-table-column prop="imageDir" label="Image directory" min-width="180" align="center" show-overflow-tooltip />
+        <el-table-column prop="slicePixels" label="Slice pixels" width="120" align="center">
+          <template #default="{ row }">
+            {{ row.slicePixels ?? '' }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="zstackStep" label="Z-stack step" width="130" align="center">
+          <template #default="{ row }">
+            {{ row.zstackStep ?? '' }}
+          </template>
+        </el-table-column>
         <el-table-column label="Actions" width="90" fixed="right" align="center">
           <template #default="{ row }">
             <div class="table-actions">
@@ -130,6 +140,28 @@
         </el-form-item>
         <el-form-item label="Image directory" prop="imageDir">
           <el-input v-model="form.imageDir" maxlength="500" />
+        </el-form-item>
+        <el-form-item label="Slice pixels" prop="slicePixels">
+          <el-input-number
+            v-model="form.slicePixels"
+            :min="0.01"
+            :precision="2"
+            :step="0.1"
+            :value-on-clear="null"
+            controls-position="right"
+            placeholder="e.g. 5.6"
+          />
+        </el-form-item>
+        <el-form-item label="Z-stack step (µm)" prop="zstackStep">
+          <el-input-number
+            v-model="form.zstackStep"
+            :min="0.01"
+            :precision="2"
+            :step="0.1"
+            :value-on-clear="null"
+            controls-position="right"
+            placeholder="e.g. 1.4"
+          />
         </el-form-item>
         <el-form-item label="Channel 1 Max" prop="channel1MaxName">
           <el-input v-model="form.channel1MaxName" maxlength="500" />
@@ -242,6 +274,8 @@ const emptyForm = (): ProteinImages => ({
   detection: false,
   stage: '',
   imageDir: '',
+  slicePixels: null,
+  zstackStep: null,
   channel1MaxName: '',
   channel2MaxName: '',
   mergedMaxName: '',
@@ -318,6 +352,8 @@ const handleSave = async () => {
       location: form.location?.trim() || undefined,
       detection: !!form.detection,
       imageDir: form.imageDir?.trim() || undefined,
+      slicePixels: form.slicePixels ?? null,
+      zstackStep: form.zstackStep ?? null,
       channel1MaxName: form.channel1MaxName?.trim() || undefined,
       channel2MaxName: form.channel2MaxName?.trim() || undefined,
       mergedMaxName: form.mergedMaxName?.trim() || undefined,
@@ -453,7 +489,8 @@ onMounted(() => {
   min-width: 0;
 }
 
-:deep(.el-dialog .el-select) {
+:deep(.el-dialog .el-select),
+:deep(.el-dialog .el-input-number) {
   width: 100%;
 }
 
@@ -670,6 +707,10 @@ onMounted(() => {
 
   .protein-images-dialog .el-form-item__content {
     margin-left: 0 !important;
+  }
+
+  .protein-images-dialog .el-input-number {
+    width: 100%;
   }
 }
 </style>

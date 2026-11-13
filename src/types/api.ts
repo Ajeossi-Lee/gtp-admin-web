@@ -72,6 +72,10 @@ export interface ProteinImages {
   detection?: boolean
   stage: string
   imageDir?: string
+  /** 页面像素大小，例如 5.6 */
+  slicePixels?: number | null
+  /** 每层切片厚度，单位微米，例如 1.4 */
+  zstackStep?: number | null
   channel1MaxName?: string
   channel2MaxName?: string
   mergedMaxName?: string
